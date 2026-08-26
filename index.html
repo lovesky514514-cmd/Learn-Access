@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f3a9c3" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>算法冒险之旅</title>
+  <link rel="icon" type="image/jpeg" href="assets/site-icon.jpg" />
+  <link rel="apple-touch-icon" href="assets/site-icon.jpg" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar glass-card">
+      <button class="brand spring" data-view-jump="today" aria-label="回到首页">
+        <span class="brand-mark">✦</span>
+        <span><b>算法冒险之旅</b><small>每天进步一点点，成为更强的自己！</small></span>
+      </button>
+      <div class="daily-quote" id="headerQuote">☆ 今天也要加油哦！你已经比昨天更强了！</div>
+      <div class="top-actions">
+        <button class="text-btn spring" id="notesBtn">▣ <span>我的笔记</span></button>
+        <div class="focus-toast focus-top" id="focusToast" hidden>
+          <div><small>专注</small><b id="focusTime">25:00</b></div>
+          <button class="focus-stop spring" id="focusStopBtn" type="button" title="结束并记录">■</button>
+        </div>
+        <button class="text-btn spring" id="settingsBtn">⚙ <span>设置</span></button>
+        <button class="profile-button spring" id="profileBtn">
+          <img src="assets/site-icon.jpg" alt="SuKoYa 头像" />
+          <span><b>SuKoYa</b><small id="levelText">Lv.1</small></span>
+          <i>⌄</i>
+        </button>
+      </div>
+    </header>
+
+    <aside class="sidebar glass-card" aria-label="主导航">
+      <nav class="side-nav">
+        <button class="nav-item active spring" data-view="today"><span>⌂</span><b>今日学习</b></button>
+        <button class="nav-item spring" data-view="map"><span>▦</span><b>课程地图</b></button>
+        <button class="nav-item spring" data-view="practice"><span>✎</span><b>题目练习</b></button>
+        <button class="nav-item spring" data-view="lab"><span>⚗</span><b>实验室</b><em>NEW</em></button>
+        <button class="nav-item spring" data-view="achievements"><span>♕</span><b>成就系统</b></button>
+        <button class="nav-item spring" data-view="notes"><span>▣</span><b>学习笔记</b></button>
+        <button class="nav-item spring" data-view="knowledge"><span>⌕</span><b>知识库</b></button>
+        <button class="nav-item spring" data-view="favorites"><span>☆</span><b>资料收藏</b></button>
+        <button class="nav-item spring" data-view="buddy"><span>♙</span><b>小人换装</b></button>
+        <button class="nav-item spring" data-view="settings"><span>⚙</span><b>设置中心</b></button>
+      </nav>
+      <div class="streak-card soft-card">
+        <small>累计学习天数</small>
+        <div><strong id="streakDays">1</strong><span>天</span></div>
+        <p>离养成算法大佬又近一步！</p>
+      </div>
+      <div class="sidebar-buddy">
+        <img id="sidebarBuddy" src="assets/streak-buddy.png?v=20260826c" alt="累计学习陪伴小人" />
+      </div>
+    </aside>
+
+    <main class="main" id="appView">
+      <section class="view active" data-view-panel="today">
+        <div class="progress-card glass-card">
+          <div class="progress-copy">
+            <h2>今日学习进度</h2>
+            <div class="progress-row">
+              <div class="ring" id="progressRing"><span id="progressPct">0%</span></div>
+              <div class="progress-meta">
+                <small>今日目标：<span id="goalLabel">学习 2 小时</span></small>
+                <div class="hours"><b id="hoursDone">0.0</b><span> / 2 小时</span></div>
+                <button class="primary spring" id="continueBtn">继续学习</button>
+              </div>
+            </div>
+          </div>
+          <div class="tip soft-card">
+            <b>小贴士</b>
+            <p id="tipText">别着急，慢慢来，你走的每一步都算数～</p>
+            <span class="tip-face">⌒▽⌒</span>
+          </div>
+        </div>
+
+        <section class="course-plan glass-card">
+          <div class="section-title"><h2>学习计划</h2><button class="ghost spring" data-view-jump="map">查看完整计划 ›</button></div>
+          <div class="course-strip" id="courseStrip"></div>
+        </section>
+
+        <div class="lower-grid">
+          <section class="tasks glass-card">
+            <div class="section-title"><h2>今日任务</h2><span id="todayLabel">Day 1</span></div>
+            <div id="taskList"></div>
+          </section>
+          <section class="buddy-card glass-card">
+            <div class="buddy-card-copy">
+              <h2>学习小伙伴</h2>
+              <div class="speech" id="buddySpeech">要一起加油哦！我会一直陪着你的！</div>
+              <button class="primary spring" data-view-jump="lab">问问 SuKoYa</button>
+            </div>
+            <img id="homeBuddy" src="assets/look-glasses.jpg" alt="今日学习小伙伴" />
+          </section>
+        </div>
+
+        <section class="mobile-stats glass-card" id="mobileStats">
+          <div><small>等级</small><b id="mobileLevel">Lv.1</b></div>
+          <div><small>经验</small><b id="mobileXp">0 / 1200</b></div>
+          <div><small>连续</small><b id="mobileStreak">1 天</b></div>
+        </section>
+      </section>
+
+      <section class="view" data-view-panel="map">
+        <div class="page-head glass-card">
+          <div><h1>30 天算法成长地图</h1><p>课程按 CS50P → MIT 6.006 → Google ML Crash Course → PyTorch → Google Recommendation Systems 的先后关系重新拆分；每天都有讲义、例子、练习和自测。</p></div>
+          <button class="ghost spring danger-lite" id="resetPlanBtn">重置课程进度</button>
+        </div>
+        <div class="week-tabs" id="weekTabs"></div>
+        <div class="day-grid" id="dayGrid"></div>
+      </section>
+
+      <section class="view" data-view-panel="practice">
+        <div class="page-head glass-card">
+          <div><h1>题目练习</h1><p>先自己想，再要提示；题目是练思路，不是练复制答案。</p></div>
+          <div class="seg"><button class="active spring" data-diff="all">全部</button><button class="spring" data-diff="easy">简单</button><button class="spring" data-diff="medium">中等</button></div>
+        </div>
+        <div class="practice-grid" id="practiceGrid"></div>
+      </section>
+
+      <section class="view" data-view-panel="lab">
+        <div class="lab-layout">
+          <section class="ai-panel glass-card">
+            <div class="ai-head">
+              <div><h1>DeepSeek · 算法实验室</h1><p>可切提示、讲解、完整答案；默认会读取你今天学到哪里。</p></div>
+              <div class="model-switch">
+                <label>模型<select id="modelSelect"><option value="deepseek-v4-flash">V4 Flash</option><option value="deepseek-v4-pro">V4 Pro</option></select></label>
+                <label>模式<select id="modeSelect"><option value="hint">只给提示</option><option value="teach">讲解模式</option><option value="answer">直接答案</option></select></label>
+              </div>
+            </div>
+            <div class="quick-prompts">
+              <button class="chip spring" data-quick="用最简单的生活例子解释我今天的知识点，不要先讲公式。">讲今天的知识点</button>
+              <button class="chip spring" data-quick="根据我今天的学习内容出 3 道由浅到深的小测验，先不要给答案。">出 3 道小测</button>
+              <button class="chip spring" data-quick="我会把我的解题思路发给你，请只检查逻辑漏洞，不要直接重写答案。">检查我的思路</button>
+            </div>
+            <div class="chat" id="chatBox"></div>
+            <form class="chat-form" id="chatForm">
+              <textarea id="chatInput" rows="3" placeholder="例如：我不懂哈希表为什么查找能接近 O(1)，用生活例子讲给我……"></textarea>
+              <div class="chat-tools">
+                <button type="button" class="ghost spring" id="contextBtn">带上今日进度 ✓</button>
+                <button class="primary spring" type="submit" id="sendBtn">发送</button>
+              </div>
+            </form>
+          </section>
+          <aside class="lab-side glass-card">
+            <img id="labBuddy" src="assets/lab-buddy.png?v=20260826d" alt="SuKoYa 学习伙伴" />
+            <h3>SuKoYa 的学习碎碎念</h3>
+            <ul class="cute-lab-notes">
+              <li>卡住啦？把你想到哪一步告诉我就好 ( •̀ᴗ•́ )و</li>
+              <li>“为什么会这样”是超厉害的问题。</li>
+              <li>不会也没关系，我们把它拆小一点。</li>
+              <li>代码写完先跑跑看，我陪你一起捉虫。</li>
+              <li>今天真的弄懂一个点，就已经赚到啦 ✦</li>
+            </ul>
+            <button class="ghost spring" id="clearChatBtn">清空聊天</button>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" data-view-panel="achievements">
+        <div class="page-head glass-card">
+          <div><h1>成就与等级</h1><p>把坚持、理解、刷题和探索都变成可见的成长记录。</p></div>
+          <button class="primary spring" id="openLevelBtn">查看等级详情</button>
+        </div>
+        <div class="stats-grid" id="achievementStats"></div>
+        <div class="badge-grid" id="badgeGrid"></div>
+      </section>
+
+      <section class="view" data-view-panel="notes">
+        <div class="notes glass-card">
+          <div class="section-title"><div><h1>学习笔记</h1><p>只记真正想明白的东西，不抄课本。</p></div><span id="noteStatus">自动保存在本机</span></div>
+          <textarea id="notesArea" placeholder="今天我真正理解的一件事是……"></textarea>
+          <div class="notes-actions"><button class="ghost spring" id="insertTemplateBtn">插入复盘模板</button><button class="primary spring" id="downloadNotesBtn">导出 Markdown</button></div>
+        </div>
+      </section>
+
+      <section class="view" data-view-panel="favorites">
+        <div class="page-head glass-card"><div><h1>高质量学习资料</h1><p>只保留官方课程、大学课程和可视化工具；别把“收藏”误当成“学会”。</p></div></div>
+        <div class="resource-grid" id="resourceGrid"></div>
+      </section>
+
+      <section class="view" data-view-panel="knowledge">
+        <div class="page-head glass-card knowledge-head">
+          <div><h1>算法知识库</h1><p>不是链接目录：每个词条都能直接在站内读，覆盖 Python、数据结构、数学、机器学习、推荐系统，以及计算机基础支线。</p></div>
+          <label class="kb-search">搜索<input id="knowledgeSearch" type="search" placeholder="例如：哈希表 / 梯度下降 / TCP / Embedding" /></label>
+        </div>
+        <div class="kb-tabs" id="knowledgeTabs"></div>
+        <div class="kb-grid" id="knowledgeGrid"></div>
+      </section>
+
+      <section class="view" data-view-panel="buddy">
+        <div class="wardrobe-layout">
+          <section class="buddy-room glass-card">
+            <div class="room-stage" id="roomStage">
+              <div class="room-glow"></div>
+              <img id="wardrobeBuddy" src="assets/look-glasses.jpg" alt="学习小人" />
+            </div>
+            <div class="room-copy"><span class="tiny-label">我的小屋</span><h1>今天让谁陪你学习？</h1><p>挑一张最顺眼的 SuKoYa，今天也一起慢慢变厉害吧 (´▽｀)</p></div>
+          </section>
+          <section class="wardrobe-panel glass-card">
+            <div class="section-title"><h2>小人图库</h2><span>选个今天的搭子 ♡</span></div>
+            <div class="outfit-grid" id="outfitGrid"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" data-view-panel="settings">
+        <div class="settings glass-card">
+          <h1>设置中心</h1>
+          <div class="settings-grid">
+            <label>Cloudflare Worker 地址<input id="workerUrl" placeholder="https://algorithm-tutor.xxx.workers.dev" /></label>
+            <label>个人访问口令<input id="accessToken" type="password" placeholder="只保存在这台设备浏览器里" /></label>
+            <label>每日目标（分钟）<input id="dailyGoal" type="number" min="20" max="480" value="120" /></label>
+            <label>动画强度<select id="motionMode"><option value="full">QQ 弹弹</option><option value="soft">轻柔</option><option value="off">关闭</option></select></label>
+          </div>
+          <div class="settings-actions"><button class="ghost spring" id="testWorkerBtn">测试 AI 连接</button><button class="primary spring" id="saveSettingsBtn">保存设置</button></div>
+          <p class="safe-note">DeepSeek API Key 不会写进前端或 GitHub；它只放在 Cloudflare Worker 的 Secret 里。</p>
+          <div class="test-result" id="testResult"></div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="rightbar">
+      <section class="xp glass-card spring clickable" id="xpCard" role="button" tabindex="0">
+        <div class="section-title"><h3>经验值</h3><span id="xpLevelTag">Lv.1</span></div>
+        <div class="xp-number"><span>★</span><b id="xpText">0</b><small>/ 1200</small></div>
+        <div class="xp-track"><i id="xpBar"></i></div>
+        <p id="nextLevel">再学 1200 经验升级</p>
+      </section>
+      <section class="badges glass-card">
+        <div class="section-title"><h3>成就徽章</h3><button class="ghost spring" data-view-jump="achievements">查看全部 ›</button></div>
+        <div class="mini-badges" id="miniBadges"></div>
+      </section>
+      <section class="calendar glass-card">
+        <div class="section-title"><h3>学习日历</h3><span id="monthLabel"></span></div>
+        <div class="cal-grid" id="calendarGrid"></div>
+      </section>
+      <section class="quote-card glass-card">
+        <div class="section-title"><h3>一言</h3><button class="ghost spring" id="newQuoteBtn">换一句</button></div>
+        <p id="quoteText">算法就像魔法，当你理解它的时候，世界都会变得有趣起来 ✨</p>
+      </section>
+    </aside>
+
+    <nav class="bottom-nav glass-card" aria-label="平板快捷导航">
+      <button class="active spring" data-view-jump="today"><span>⌂</span><small>首页</small></button>
+      <button class="spring" data-view-jump="map"><span>▦</span><small>课程</small></button>
+      <button class="spring" data-view-jump="practice"><span>✎</span><small>练习</small></button>
+      <button class="spring" data-view-jump="lab"><span>⚗</span><small>AI</small></button>
+    </nav>
+  </div>
+
+  <dialog id="settingsDialog">
+    <form method="dialog" class="dialog-card glass-card">
+      <h2>AI 接入设置</h2>
+      <p>第一次在平板打开时填一次，之后保存在浏览器本机。</p>
+      <label>Worker 地址<input id="dialogWorkerUrl" placeholder="https://...workers.dev" /></label>
+      <label>访问口令<input id="dialogToken" type="password" /></label>
+      <div class="dialog-actions"><button value="cancel" class="ghost spring">取消</button><button value="default" class="primary spring" id="dialogSave">保存</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="levelDialog">
+    <div class="dialog-card level-dialog glass-card">
+      <button class="dialog-close spring" id="closeLevelBtn" aria-label="关闭">×</button>
+      <img src="assets/site-icon.jpg" alt="SuKoYa 头像" />
+      <h2>SuKoYa · <span id="dialogLevel">Lv.1</span></h2>
+      <p id="dialogTitle">刚刚启程的学习者</p>
+      <div class="level-meter"><i id="dialogXpBar"></i></div>
+      <div class="level-facts" id="levelFacts"></div>
+    </div>
+  </dialog>
+
+  <dialog id="lessonDialog" class="lesson-dialog">
+    <article class="dialog-card lesson-card glass-card">
+      <button class="dialog-close spring" id="closeLessonBtn" aria-label="关闭">×</button>
+      <div class="lesson-kicker" id="lessonKicker">Day 1</div>
+      <h2 id="lessonTitle">课程详情</h2>
+      <p id="lessonSummary"></p>
+      <div class="lesson-meta" id="lessonMeta"></div>
+      <section class="lesson-block"><h3>今天学完要会什么</h3><ul id="lessonGoals"></ul></section>
+      <section class="lesson-block"><h3>站内讲义</h3><div id="lessonConcepts" class="concept-list"></div></section>
+      <section class="lesson-block"><h3>代码 / 推演例子</h3><pre id="lessonCode"><code></code></pre></section>
+      <section class="lesson-block"><h3>必须动手</h3><ol id="lessonExercises"></ol></section>
+      <section class="lesson-block"><h3>不看答案自测</h3><ol id="lessonChecks"></ol></section>
+      <section class="lesson-block"><h3>课程依据与延伸</h3><div id="lessonResources" class="lesson-resources"></div></section>
+      <div class="lesson-actions"><button class="ghost spring" id="lessonAskAiBtn">让 AI 继续讲这节</button><button class="primary spring" id="lessonCompleteBtn">完成今天</button></div>
+    </article>
+  </dialog>
+
+  <script src="curriculum.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
